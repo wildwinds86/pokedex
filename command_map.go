@@ -14,8 +14,9 @@ func (c *Client) ListLocations(pageURL *string) (RespLocations, error) {
 		url = *pageURL
 	}
 
-	cacheData, exists := pokecache.Get(*pageURL)
+	cacheData, exists := pokecache.Get(url)
 	if exists {
+		fmt.Println("*** USING CACHED DATA ***")
 		locationsResp := RespLocations{}
 		err := json.Unmarshal(cacheData, &locationsResp)
 
@@ -25,7 +26,7 @@ func (c *Client) ListLocations(pageURL *string) (RespLocations, error) {
 			return locationsResp, nil
 		}
 	}
-
+	fmt.Println("-- No cached data found, pulling from API")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return RespLocations{}, err
@@ -48,7 +49,7 @@ func (c *Client) ListLocations(pageURL *string) (RespLocations, error) {
 		return RespLocations{}, err
 	}
 
-	pokecache.Add(*pageURL, data)
+	pokecache.Add(url, data)
 	return locationsResp, nil
 }
 
