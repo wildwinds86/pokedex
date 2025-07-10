@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	//"time"
 )
 
 func startRepl(cfg *config) {
