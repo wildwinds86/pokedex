@@ -1,3 +1,3 @@
 module github.com/wildwinds86/pokedex
 
-go 1.24.4
+go 1.24
